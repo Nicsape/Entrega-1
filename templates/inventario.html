@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Inventario - Gimnasio</title>
+<style>
+body{font-family:Poppins;background:#1d2531;color:#fff;text-align:center;}
+.container{width:95%;margin:auto;margin-top:40px;}
+h1{color:#00c9a7;margin-bottom:30px;}
+table{width:100%;border-collapse:collapse;margin-top:20px;background:#2d3748;}
+th,td{border:1px solid #00c9a7;padding:12px;}
+th{background:#00c9a7;color:#000;font-weight:bold;}
+.actions{display:flex;gap:10px;justify-content:center;}
+.btn{
+    padding:8px 15px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    text-decoration:none;
+    font-size:14px;
+    transition:all 0.3s;
+}
+.btn:hover{transform:translateY(-2px);}
+.btn-edit{background:#ffa726;color:#000;}
+.btn-edit:hover{background:#ff9800;}
+.btn-delete{background:#f44336;color:#fff;}
+.btn-delete:hover{background:#d32f2f;}
+.btn-add{background:#00c9a7;color:#000;margin:10px;padding:12px 20px;font-size:16px;}
+.btn-add:hover{background:#00b894;}
+.alert-success{background:#00c9a7;color:#000;padding:12px;border-radius:5px;margin:15px 0;}
+.alert-error{background:#f44336;color:#fff;padding:12px;border-radius:5px;margin:15px 0;}
+.empty-message{color:#ffa726;font-size:18px;margin:30px 0;padding:20px;}
+.back-btn{padding:12px 25px;background:#6c757d;color:#fff;border:none;border-radius:10px;cursor:pointer;margin-top:20px;}
+.back-btn:hover{background:#5a6268;}
+</style>
+</head>
+<body>
+<h1>📦 Inventario del Gimnasio</h1>
+
+<div class="container">
+    <!-- Mostrar mensajes flash -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- Mostrar errores de conexión -->
+    {% if error %}
+        <div class="alert-error">Error: {{ error }}</div>
+    {% endif %}
+
+    <a href="/registrar_inventario" class="btn btn-add">➕ Agregar Nuevo Producto</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Producto</th>
+                <th>Categoría</th>
+                <th>Stock</th>
+                <th>Precio</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% if inventario_items %}
+            {% for item in inventario_items %}
+            <tr>
+                <td>{{ item.CodigoInv }}</td>
+                <td>{{ item.Producto }}</td>
+                <td>{{ item.Categoria }}</td>
+                <td>{{ item.Stock }}</td>
+                <td>${{ "%.2f"|format(item.Precio) }}</td>
+                <td class="actions">
+                    <a href="/editar_inventario/{{ item.CodigoInv }}" class="btn btn-edit">✏️ Editar</a>
+                    <form method="POST" action="/eliminar_inventario/{{ item.CodigoInv }}" style="display:inline;">
+                        <button type="submit" class="btn btn-delete" onclick="return confirm('¿Estás seguro de eliminar {{ item.Producto }}?')">🗑️ Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="6" class="empty-message">
+                    {% if not error %}
+                    No hay productos en el inventario. 
+                    <a href="/registrar_inventario" style="color:#00c9a7; text-decoration:underline;">¡Agrega el primero!</a>
+                    {% else %}
+                    No se pueden cargar los productos debido a un error de conexión.
+                    {% endif %}
+                </td>
+            </tr>
+        {% endif %}
+        </tbody>
+    </table>
+
+    <a href="/">
+        <button class="back-btn">⬅ Volver al Menú Principal</button>
+    </a>
+</div>
+</body>
+</html>

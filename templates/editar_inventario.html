@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Editar Producto - Gimnasio</title>
+<style>
+body{font-family:Poppins;background:#1d2531;color:#fff;text-align:center;}
+.container{width:50%;margin:auto;margin-top:40px;}
+h1{color:#00c9a7;margin-bottom:30px;}
+.form-group{margin:20px 0;text-align:left;}
+label{display:block;margin-bottom:8px;color:#00c9a7;font-weight:bold;}
+input,select{
+    width:100%;
+    padding:12px;
+    border:2px solid #00c9a7;
+    border-radius:8px;
+    background:#2d3748;
+    color:#fff;
+    font-size:16px;
+}
+input:focus,select:focus{
+    outline:none;
+    border-color:#ffa726;
+    background:#374151;
+}
+.btn{
+    padding:12px 30px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    margin:10px;
+    font-size:16px;
+    transition:all 0.3s;
+}
+.btn:hover{transform:translateY(-2px);}
+.btn-submit{background:#00c9a7;color:#000;font-weight:bold;}
+.btn-submit:hover{background:#00b894;}
+.btn-cancel{background:#6c757d;color:#fff;}
+.btn-cancel:hover{background:#5a6268;}
+.error{color:#f44336;margin:10px 0;padding:10px;background:#2d1b1b;border-radius:5px;}
+.form-container{background:#2d3748;padding:30px;border-radius:10px;border:2px solid #00c9a7;}
+</style>
+</head>
+<body>
+<h1>✏️ Editar Producto</h1>
+
+<div class="container">
+    <div class="form-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="error">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <div class="form-group">
+                <label for="producto">Nombre del Producto:</label>
+                <input type="text" id="producto" name="producto" value="{{ item.Producto }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="categoria">Categoría:</label>
+                <select id="categoria" name="categoria" required>
+                    <option value="">Seleccione una categoría</option>
+                    <option value="Suplementos" {% if item.Categoria == 'Suplementos' %}selected{% endif %}>Suplementos</option>
+                    <option value="Implementos" {% if item.Categoria == 'Implementos' %}selected{% endif %}>Implementos</option> 
+                    <option value="Alimentos" {% if item.Categoria == 'Alimentos' %}selected{% endif %}>Alimentos</option>
+                    <option value="Ropa" {% if item.Categoria == 'Ropa' %}selected{% endif %}>Ropa</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="stock">Stock Disponible:</label>
+                <input type="number" id="stock" name="stock" value="{{ item.Stock }}" 
+                       min="0" max="100" required>
+            </div>
+
+            <div class="form-group">
+                <label for="precio">Precio ($):</label>
+                <input type="number" id="precio" name="precio" value="{{ item.Precio }}" 
+                       step="0.01" min="0" required>
+            </div>
+
+            <button type="submit" class="btn btn-submit">💾 Actualizar Producto</button>
+            <a href="/inventario" class="btn btn-cancel">❌ Cancelar</a>
+        </form>
+    </div>
+</div>
+</body>
+</html>
