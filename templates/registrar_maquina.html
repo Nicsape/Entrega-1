@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Registrar Máquina - Gimnasio</title>
+<style>
+body{font-family:Poppins;background:#1d2531;color:#fff;text-align:center;}
+.container{width:50%;margin:auto;margin-top:40px;}
+h1{color:#00c9a7;margin-bottom:30px;}
+.form-group{margin:20px 0;text-align:left;}
+label{display:block;margin-bottom:8px;color:#00c9a7;font-weight:bold;}
+input,select{
+    width:100%;
+    padding:12px;
+    border:2px solid #00c9a7;
+    border-radius:8px;
+    background:#2d3748;
+    color:#fff;
+    font-size:16px;
+}
+input:focus,select:focus{
+    outline:none;
+    border-color:#ffa726;
+    background:#374151;
+}
+.btn{
+    padding:12px 30px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    margin:10px;
+    font-size:16px;
+    transition:all 0.3s;
+}
+.btn:hover{transform:translateY(-2px);}
+.btn-submit{background:#00c9a7;color:#000;font-weight:bold;}
+.btn-submit:hover{background:#00b894;}
+.btn-cancel{background:#6c757d;color:#fff;}
+.btn-cancel:hover{background:#5a6268;}
+.error{color:#f44336;margin:10px 0;padding:10px;background:#2d1b1b;border-radius:5px;}
+.form-container{background:#2d3748;padding:30px;border-radius:10px;border:2px solid #00c9a7;}
+</style>
+</head>
+<body>
+<h1>➕ Registrar Nueva Máquina</h1>
+
+<div class="container">
+    <div class="form-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="error">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <div class="form-group">
+                <label for="nombre">Nombre de la Máquina:</label>
+                <input type="text" id="nombre" name="nombre" value="{{ nombre or '' }}" required 
+                       placeholder="Escriba su maquina">
+            </div>
+
+            <div class="form-group">
+                <label for="categoria">Categoría Muscular:</label>
+                <select id="categoria" name="categoria" required>
+                    <option value="">Seleccione una categoría</option>
+                    <option value="Pecho" {% if categoria == 'Pecho' %}selected{% endif %}>💪 Pecho</option>
+                    <option value="Espalda" {% if categoria == 'Espalda' %}selected{% endif %}>🔙 Espalda</option>
+                    <option value="Pierna" {% if categoria == 'Pierna' %}selected{% endif %}>🦵 Pierna</option>
+                    <option value="Hombro" {% if categoria == 'Hombro' %}selected{% endif %}>👆 Hombro</option>
+                    <option value="Brazo" {% if categoria == 'Brazo' %}selected{% endif %}>💪 Brazo</option>
+                    <option value="Abdomen" {% if categoria == 'Abdomen' %}selected{% endif %}>🟦 Abdomen</option>
+                    <option value="Cardio" {% if categoria == 'Cardio' %}selected{% endif %}>❤️ Cardio</option>
+                    <option value="Full Body" {% if categoria == 'Full Body' %}selected{% endif %}>⚡ Full Body</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-submit">💾 Guardar Máquina</button>
+            <a href="/maquinas" class="btn btn-cancel">❌ Cancelar</a>
+        </form>
+    </div>
+</div>
+</body>
+</html>

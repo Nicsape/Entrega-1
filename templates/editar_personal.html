@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Editar Personal - Gimnasio</title>
+<style>
+body{font-family:Poppins;background:#1d2531;color:#fff;text-align:center;}
+.container{width:60%;margin:auto;margin-top:40px;}
+h1{color:#00c9a7;margin-bottom:30px;}
+.form-group{margin:15px 0;text-align:left;}
+label{display:block;margin-bottom:8px;color:#00c9a7;font-weight:bold;}
+.required::after{content:" *";color:#f44336;}
+input,select{
+    width:100%;
+    padding:10px;
+    border:2px solid #00c9a7;
+    border-radius:8px;
+    background:#2d3748;
+    color:#fff;
+    font-size:14px;
+}
+input:focus,select:focus{
+    outline:none;
+    border-color:#ffa726;
+    background:#374151;
+}
+.form-row{display:flex;gap:15px;}
+.form-row .form-group{flex:1;}
+.btn{
+    padding:12px 30px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    margin:10px;
+    font-size:16px;
+    transition:all 0.3s;
+}
+.btn:hover{transform:translateY(-2px);}
+.btn-submit{background:#00c9a7;color:#000;font-weight:bold;}
+.btn-submit:hover{background:#00b894;}
+.btn-cancel{background:#6c757d;color:#fff;}
+.btn-cancel:hover{background:#5a6268;}
+.error{color:#f44336;margin:10px 0;padding:10px;background:#2d1b1b;border-radius:5px;}
+.form-container{background:#2d3748;padding:30px;border-radius:10px;border:2px solid #00c9a7;}
+.section-title{color:#ffa726;margin:25px 0 15px 0;border-bottom:1px solid #00c9a7;padding-bottom:8px;}
+.personal-id{color:#00c9a7;font-weight:bold;font-size:18px;}
+</style>
+</head>
+<body>
+<h1>✏️ Editar Personal</h1>
+
+<div class="container">
+    <div class="form-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="error">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <div style="text-align:center;margin-bottom:20px;">
+                <span class="personal-id">ID: {{ personal.ID_Personal }}</span>
+            </div>
+
+            <div class="section-title">📋 Información Personal</div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="nombre" class="required">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" value="{{ personal.Nombre }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="apellido" class="required">Apellido:</label>
+                    <input type="text" id="apellido" name="apellido" value="{{ personal.Apellido }}" required>
+                </div>
+            </div>
+
+            <div class="section-title">💼 Información Laboral</div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="rol" class="required">Rol/Puesto:</label>
+                    <select id="rol" name="rol" required>
+                        <option value="">Seleccione un rol</option>
+                        <option value="Entrenador" {% if personal.Rol == 'Entrenador' %}selected{% endif %}>💪 Entrenador</option>
+                        <option value="Entrenadora" {% if personal.Rol == 'Entrenadora' %}selected{% endif %}>💪 Entrenadora</option>
+                        <option value="Recepcionista" {% if personal.Rol == 'Recepcionista' %}selected{% endif %}>💁 Recepcionista</option>
+                        <option value="Nutricionista" {% if personal.Rol == 'Nutricionista' %}selected{% endif %}>🍎 Nutricionista</option>
+                        <option value="Limpieza" {% if personal.Rol == 'Limpieza' %}selected{% endif %}>🧹 Limpieza</option>
+                        <option value="Fisioterapeuta" {% if personal.Rol == 'Fisioterapeuta' %}selected{% endif %}>🩺 Fisioterapeuta</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="salario" class="required">Salario ($):</label>
+                    <input type="number" id="salario" name="salario" value="{{ personal.Salario }}" 
+                           step="0.01" min="0" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="fecha_contratacion" class="required">Fecha de Contratación:</label>
+                <input type="date" id="fecha_contratacion" name="fecha_contratacion" value="{{ personal.Fecha_Contratacion }}" required>
+            </div>
+
+            <button type="submit" class="btn btn-submit">💾 Actualizar Personal</button>
+            <a href="/personal" class="btn btn-cancel">❌ Cancelar</a>
+        </form>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Validar que la fecha no sea futura
+    const fechaInput = document.getElementById('fecha_contratacion');
+    const hoy = new Date().toISOString().split('T')[0];
+    fechaInput.max = hoy;
+});
+</script>
+</body>
+</html>
