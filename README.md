@@ -5,6 +5,7 @@ Este proyecto es una aplicación web desarrollada en Python (Flask) que permite 
 Además, se implementa una arquitectura de persistencia políglota, integrando:
 
 🟦 Base de datos relacional (SQL)
+
 🟩 Base de datos NoSQL (MongoDB)
 
 Características
@@ -21,24 +22,34 @@ Características
 
 Nuevo módulo (NoSQL - MongoDB)
 -Registro de notificaciones dinámicas
+
 -Almacenamiento de datos en formato JSON flexible
+
 -Soporte para contenido dinámico (texto, futuros campos multimedia)
 
 
 Tecnologías utilizadas:
 
 -Python (Flask)
+
 -MySQL (DBeaver)
+
 -MongoDB
+
 -JSON
+
 -Git y GitHub
 
 Requisitos
 Antes de ejecutar el proyecto, asegúrate de tener instalado:
-Python 3.x
-MongoDB (ejecutándose en local)
-DBeaver o cualquier gestor de bases de datos SQL
-Git
+
+-Python 3.x
+
+-MongoDB (ejecutándose en local)
+
+-DBeaver o cualquier gestor de bases de datos SQL
+
+-Git
 
 Instalación y ejecución
 1. Clonar el repositorio
