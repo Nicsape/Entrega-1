@@ -10,9 +10,13 @@ Además, se implementa una arquitectura de persistencia políglota, integrando:
 Características
 
 -Gestión de usuarios
+
 -Gestión de máquinas (registro, edición y categorización)
+
 -Gestión de inventario
+
 -Gestión de personal
+
 -Gestión de distribuidores
 
 Nuevo módulo (NoSQL - MongoDB)
