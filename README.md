@@ -21,6 +21,8 @@ Características
 -Gestión de distribuidores
 
 
+
+
 Nuevo módulo (NoSQL - MongoDB)
 -Registro de notificaciones dinámicas
 
