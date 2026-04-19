@@ -53,7 +53,7 @@ La base de datos utilizada es:
 Gym
 Colección:
 notificaciones
-4. nstalar dependencias
+4. Instalar dependencias
 pip install flask pymongo mysql-connector-python
 5. Configurar la conexión a la base de datos
 
